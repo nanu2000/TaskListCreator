@@ -1,0 +1,51 @@
+.TaskItem
+{
+  display:block;
+}
+
+.TaskItemTime .TaskRemoveItem .TaskItemInput
+{
+  display:inline-block;
+}
+
+.TaskTR
+{
+  height:25px;
+  margin:0;
+  border-spacing: 0;
+}
+.TaskTD
+{
+  margin:0;
+  padding:0;
+  padding-right: 5px;
+}
+.breakTD
+{
+  height:0px;
+  margin:0;
+  padding:0;
+}
+#TextTaskList
+{
+
+  border-spacing: 0px;
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  display: inline-block;
+  text-align: left;
+  vertical-align: top;
+}
+#TaskEditorTable
+{ 
+
+    border-spacing: 0px;
+  width:50%;
+  vertical-align: top;
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  display: inline-block;
+  text-align: left;  
+}
