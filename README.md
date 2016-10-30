@@ -1,9 +1,9 @@
 # TaskListCreator
-Just a simple 2 day project built with Vanilla Javascript and PHP.
+## Just a simple 2 day project built with Vanilla Javascript and PHP.
 
 The code for this project is fairly decent, I cannot say it's the best quality, but I do plan to refactor some of it.
  
-The most complicated part of this project was to make it copy and pastable and not lose horizontal or vertical alignment. 
+### The most complicated part of this project was to make it copy and pastable and not lose horizontal or vertical alignment. 
 
 So if you create a new task list and then copy and paste it into a txt editor the proportions should look very similar, if not the same.
 
@@ -18,23 +18,20 @@ Finaly, the end result is the amount of horizontal spaces that need to be added 
 
 
 
-Here is a quick outline of what I did:
+### Here is some mockup code that describes the solution I used for making the task list copy and pastable without losing horizontal alignment.
 
 
-const H_SPACE = "&nbsp";
+    const H_SPACE = "&nbsp";
 
-var longestStr = findLongestStrInTaskList();
+    var longestStr = findLongestStrInTaskList();
 
-replaceEachCharInString(longestStr, H_SPACE);
+    replaceEachCharInString(longestStr, H_SPACE);
 
-foreach task in list
-{
- 
- 
- //Since H_SPACE may be more than one char (which it is) we need to divide length by the size of it.
-  var result = (longestStr.length / H_SPACE.length) - task.string.length;
+    foreach task in list
+    {
+        //Since H_SPACE may be more than one char (which it is) we need to divide length by the size of it.
+        var result = (longestStr.length / H_SPACE.length) - task.string.length;
   
-  //Append the Horizontal spaces
-  task.string += longestStr.substring(0, result);
-  
-}
+        //Append the Horizontal spaces
+        task.string += longestStr.substring(0, result);
+    }
