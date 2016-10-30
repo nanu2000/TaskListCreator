@@ -2,7 +2,8 @@
 Just a simple 2 day project built with Vanilla Javascript and PHP.
 
 The code for this project is fairly decent, I cannot say it's the best quality, but I do plan to refactor some of it.
-The restrictions for this project are actually pretty rigid. The most complicated part of this project was to make it copy and pastable and not lose horizontal or vertical alignment. 
+ 
+The most complicated part of this project was to make it copy and pastable and not lose horizontal or vertical alignment. 
 
 So if you create a new task list and then copy and paste it into a txt editor the proportions should look very similar, if not the same.
 
