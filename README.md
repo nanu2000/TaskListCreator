@@ -15,6 +15,8 @@ Second, for every task in the list I subtract the amount of characters the task 
 
 Finaly, the end result is the amount of horizontal spaces that need to be added to the current task string to keep horizontal alignment on copy and paste.
 
+
+
 Here is a quick outline of what I did:
 
 
