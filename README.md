@@ -5,7 +5,7 @@ The code for this project is fairly decent, I cannot say it's the best quality, 
  
 ### The most complicated part of this project was to make it copy and pastable without losing horizontal or vertical alignment. 
 
-So if you create a new task list and then copy and paste it into a txt editor the proportions should look very similar, if not the same.
+So if you create a new task list and then copy and paste it into a text editor the proportions should look very similar, if not the same.
 
 I used a simple formula to keep the horizontal spacing accurate.
 
