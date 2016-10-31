@@ -5,6 +5,30 @@
 //TODO
 //
 //CLEAN UP getTaskListMarkup() FUNCTION
+const VERTICAL_SPACING            = "</br>"
+
+
+const TASK_OUTPUT_PARENT_ID       = "output-parent";
+
+
+const EDITOR_PARENT_ID            = "task-editor-table";
+
+const EDITOR_ENTER_NAME_ID        = "operators-name";
+const EDITOR_ADD_NEW_TASK_ID      = "create-new-task";
+
+const EDITOR_GROUP_PARENT_ID      = "task-editor-group-parent";
+const EDITOR_GROUP                = "task-editor-group";
+const EDITOR_OUTPUT_ITEM          = "task-editor-item";
+
+
+const TASK_ITEM_BREAK_CLASS       = "task-break-row";
+
+
+const OUTPUT_NAME_BASE_ID         = "task_name";
+const OUTPUT_TIME_BASE_ID         = "task_time";
+const OUTPUT_REMOVE_BASE_ID       = "task_remove";
+
+
 
 
 var tasksInputs = [];
@@ -15,8 +39,10 @@ const SPACING_FOR_COPY_COMPATABILITY = "&nbsp";
 
 function onLoad()
 {
-  document.getElementById(TASK_ADD_NEW_TASK_ID).onclick = addTask;
-  document.getElementById(TASK_ENTER_NAME_ID).onkeyup   = update;
+  document.getElementById(EDITOR_ADD_NEW_TASK_ID).onclick = addTask;
+  document.getElementById(EDITOR_ENTER_NAME_ID).onkeyup   = update;
+
+  document.getElementById(EDITOR_GROUP_PARENT_ID).appendChild(createVerticalSpaceElement(VERTICAL_SPACING));
 }
 
 window.onload = onLoad;
@@ -119,8 +145,32 @@ function getIndents(indents, strLength)
 }
 
 
-function getTaskListMarkup()
+function createTaskOutputItem(desc, timeTaken)
 {
+
+    var task        = document.createElement("TR");
+    var time        = document.createElement("TD");
+    var description = document.createElement("TD");
+
+    task.setAttribute("class", EDITOR_GROUP);
+    description.setAttribute("class", EDITOR_OUTPUT_ITEM);
+    time.setAttribute("class", EDITOR_OUTPUT_ITEM);
+
+    description.innerHTML = desc;
+    time.innerHTML        = timeTaken;
+
+    task.appendChild(description);
+    task.appendChild(time);
+
+    return task;
+}
+
+
+function getTaskList()
+{
+
+
+  var newElements = [];
 
 
   var totalMins = getTotalMinutesFromTasks();
@@ -130,7 +180,8 @@ function getTaskListMarkup()
 
   var today = new getDate();
 
-  var nameAndDate = document.getElementById(TASK_ENTER_NAME_ID).value;
+  var nameAndDate = document.getElementById(EDITOR_ENTER_NAME_ID).value;
+
   nameAndDate += "'s Task List ";
   nameAndDate += today.month;
   nameAndDate += "/";
@@ -149,39 +200,21 @@ function getTaskListMarkup()
     indents += SPACING_FOR_COPY_COMPATABILITY; 
   }
 
+  {
+    var desc = "<b>" + nameAndDate + "</b>" +  getIndents(indents, nameAndDate.length - 1);
+    var time = "<b>Total Time : </b> " + hours + "hrs " + mins + 'mins';
 
-  var innerHtml = '<tbody>\
-                    <tr class = "'+ TASK_ITEM_CLASS +'">\
-                      <td class = "'+TASK_WRAPPER_CLASS+'">';
-
-  innerHtml +=          "<b>" + 
-                        nameAndDate + 
-                        "</b>" +  
-                        getIndents(indents, nameAndDate.length - 1);
-
-  innerHtml +=        '</td>\
-                      <td class = "'+TASK_WRAPPER_CLASS+'">\
-                        <b>\
-                          Total Time : \
-                        </b>'+ 
-                        hours + 
-                        "hrs " + 
-                        mins + 
-                        'mins\
-                      </td>\
-                    </tr>\
-                    <tr class = "'+ TASK_ITEM_CLASS +'">\
-                      <td class = "'+TASK_ITEM_BREAK_CLASS+'">'+
-                        VERTICAL_SPACING+
-                      '</td>\
-                    </tr>';
-
-
+    var taskoutput = createTaskOutputItem(desc, time);
+    
+    newElements.push(taskoutput);
+    newElements.push(createVerticalSpaceElement(VERTICAL_SPACING));
+  }
 
   for (i = 0; i < tasksInputs.length; i++) 
   {
   
     var taskTime = parseInt(document.getElementById(tasksInputs[i].taskTimeID).value);
+
     if(isNumberNaN(taskTime))
     {
       taskTime = 0;
@@ -191,49 +224,42 @@ function getTaskListMarkup()
     
     var hour  =  getHoursWithoutDecimal(taskTime);
     var min   =  getModulusOfHoursInMins(taskTime);
-
-    innerHtml += '<tr class = "'+ TASK_ITEM_CLASS +'">\
-                  <td class = "'+TASK_WRAPPER_CLASS+'">';
-
-
     var numberStr = (i + 1) + ".";
 
-    innerHtml +=  "<b>" +  
-                  numberStr + 
-                  "</b>" + 
-                  taskInput +  
-                  getIndents(indents, (numberStr + taskInput).length - 1);
 
-    innerHtml += '</td>\
-                  <td class = "'+TASK_WRAPPER_CLASS+'">';
+    var desc = "<b>" + numberStr + "</b>" + taskInput + getIndents(indents, (numberStr + taskInput).length - 1);
 
-    innerHtml += hour + 
-                'hrs ' + 
-                 min + 
-                'mins';
-    
-    innerHtml += '</td>\
-                  </tr>';
+    var time = hour + 'hrs ' + min + 'mins';
 
-    innerHtml += 
-    '<tr class = "'+ TASK_ITEM_CLASS +'"> \
-    <td class = "'+TASK_ITEM_BREAK_CLASS+'">'
-    +VERTICAL_SPACING+
-    '</td>\
-     </tr>';
+    var taskoutput = createTaskOutputItem(desc, time);
 
+    newElements.push(taskoutput);
+
+    newElements.push(createVerticalSpaceElement(VERTICAL_SPACING));
 
   }
 
 
-  return innerHtml + '</tbody>';
+
+  return newElements;
 
 }
 
 
 function update()
 {
-  document.getElementById(TASK_LIST_OUTPUT_PARENT_ID).innerHTML = getTaskListMarkup();
+
+  var outputParent = document.getElementById(TASK_OUTPUT_PARENT_ID);
+
+  outputParent.innerHTML = "";
+
+  var newElements = getTaskList();
+
+  for (var i = 0; i < newElements.length; i++) {
+    outputParent.appendChild(newElements[i]);
+  }
+  
+
 }
 
 
@@ -310,7 +336,7 @@ function createNewRemoveElement(id, taskID)
 
     newRemoveItem.onclick = function()
     {
-      removeTask(taskID, TASK_PARENT_ID);
+      removeTask(taskID, EDITOR_PARENT_ID);
     }
     
     return newRemoveItem;
@@ -324,9 +350,9 @@ function createVerticalSpaceElement(vspace)
   var vSpace  = document.createElement("TR");
   var td      = document.createElement('TD');
 
-  vSpace.setAttribute ("class",  TASK_ITEM_CLASS);
 
-  td.setAttribute    ("class",  TASK_ITEM_BREAK_CLASS);
+
+  vSpace.setAttribute ("class",  TASK_ITEM_BREAK_CLASS);
 
   td.innerHTML = vspace;
 
@@ -342,18 +368,18 @@ function addTask()
 
   var newTask = new TaskItem("", "", "", "");
 
-  newTask.taskID        = TASK_ITEM_START_NAME   + currentIter;
-  newTask.taskInputID   = TASK_INPUT_START_NAME  + currentIter;
-  newTask.taskTimeID    = TASK_INPUT_TIME_NAME   + currentIter;
-  newTask.taskRemoveID  = TASK_INPUT_REMOVE_NAME + currentIter;
+  newTask.taskID        = EDITOR_GROUP_PARENT_ID   + currentIter;
+  newTask.taskInputID   = OUTPUT_NAME_BASE_ID  + currentIter;
+  newTask.taskTimeID    = OUTPUT_TIME_BASE_ID   + currentIter;
+  newTask.taskRemoveID  = OUTPUT_REMOVE_BASE_ID + currentIter;
 
 
 
-  var newTaskItem = document.createElement("Div");
+  var newTaskItem = document.createElement("TBODY");
   var newTaskTR   = document.createElement("TR");
 
   newTaskItem.setAttribute  ("id",  newTask.taskID);
-  newTaskTR.setAttribute    ("class",  TASK_ITEM_CLASS);
+  newTaskTR.setAttribute    ("class",  EDITOR_GROUP);
 
 
   var inputItems = 
@@ -366,7 +392,7 @@ function addTask()
 
 
 
-  document.getElementById(TASK_PARENT_ID).appendChild(newTaskItem);
+  document.getElementById(EDITOR_PARENT_ID).appendChild(newTaskItem);
   newTaskItem.appendChild(newTaskTR);
 
 
@@ -374,7 +400,7 @@ function addTask()
   {
     curTD = document.createElement('TD');
 
-    curTD.setAttribute("class",  TASK_WRAPPER_CLASS);
+    curTD.setAttribute("class",  EDITOR_OUTPUT_ITEM);
 
     curTD.appendChild(inputItems[i]);
 

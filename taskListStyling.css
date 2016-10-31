@@ -1,32 +1,23 @@
-.TaskItem
-{
-  display:block;
-}
 
-.TaskItemTime .TaskRemoveItem .TaskItemInput
-{
-  display:inline-block;
-}
-
-.TaskTR
+.task-editor-group
 {
   height:25px;
   margin:0;
   border-spacing: 0;
 }
-.TaskTD
+.task-editor-item
 {
   margin:0;
   padding:0;
   padding-right: 5px;
 }
-.breakTD
+.task-break-row
 {
   height:0px;
   margin:0;
   padding:0;
 }
-#TextTaskList
+#output-parent
 {
 
   border-spacing: 0px;
@@ -37,7 +28,7 @@
   text-align: left;
   vertical-align: top;
 }
-#TaskEditorTable
+#task-editor-table
 { 
 
     border-spacing: 0px;
