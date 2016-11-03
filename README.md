@@ -1,7 +1,11 @@
 # TaskListCreator
-## Just a simple 2 day project built with Vanilla Javascript and PHP.
+## Just a simple 2 day project built with Vanilla Javascript.
 
 The code for this project is fairly decent, I cannot say it's the best quality, but I do plan to refactor some of it.
+
+####NOTE: 
+Some computers and text editors may not keep horizontal alignment!
+ 
  
 ### The most complicated part of this project was to make it copy and pastable without losing horizontal or vertical alignment. 
 
